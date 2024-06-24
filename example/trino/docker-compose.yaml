@@ -1,0 +1,19 @@
+services:
+  trino:
+    image: trinodb/trino
+    ports: [ "8080:8080" ]
+    volumes:
+      - ./trino-config/catalog:/etc/trino/catalog
+  minio:
+    image: minio/minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data
+    volumes: [ minio-data:/data ]
+
+volumes:
+  minio-data:
